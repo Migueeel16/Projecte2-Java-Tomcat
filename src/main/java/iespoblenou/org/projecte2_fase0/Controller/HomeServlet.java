@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 
-@WebServlet("/WelcomeServlet")
-public class WelcomeServlet extends HttpServlet {
+@WebServlet("/home")
+public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -22,7 +22,7 @@ public class WelcomeServlet extends HttpServlet {
         String user = (session != null) ? (String) session.getAttribute("user") : null;
 
         if (user != null) {
-            out.println("<h1>Benvingut, " + user + "!</h1>");
+            request.getRequestDispatcher("jsp/home.jsp").forward(request, response);
         } else {
             response.sendRedirect("login.html");
         }

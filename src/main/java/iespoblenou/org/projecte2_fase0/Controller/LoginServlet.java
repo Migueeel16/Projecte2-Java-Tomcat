@@ -22,8 +22,7 @@ public class LoginServlet extends HttpServlet {
         if ("admin".equals(username) && "123".equals(password)) {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/album");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/home");
             dispatcher.forward(request, response);
         } else {
             request.setAttribute("errorMessage", "Usuari o contrasenya incorrectes!");

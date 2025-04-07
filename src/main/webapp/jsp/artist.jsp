@@ -51,9 +51,21 @@
       background-color: #dc3545;
       color: white;
     }
+    .btn-home {
+      margin: 20px 0;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+<a href="home" class="btn-home">Volver a Home</a>
 <table>
   <thead>
   <h1>Lista de Artistas</h1>

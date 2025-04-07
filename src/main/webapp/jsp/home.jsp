@@ -31,9 +31,6 @@
                 font-size: 16px;
                 transition: background-color 0.3s ease;
             }
-            .btn:hover {
-                background-color: #007bff;
-            }
         </style>
     </head>
     <body>

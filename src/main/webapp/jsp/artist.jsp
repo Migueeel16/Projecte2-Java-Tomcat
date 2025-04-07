@@ -1,11 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Artistas</title>
   <style>
     body {
@@ -52,15 +48,15 @@
       color: white;
     }
     .btn-home {
-      margin: 20px 0;
-      padding: 12px 24px;
+      display: inline-block;
       background-color: #007bff;
       color: white;
+      padding: 12px 20px;
+      margin: 10px;
       text-decoration: none;
-      border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 16px;
-      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
   </style>
 </head>

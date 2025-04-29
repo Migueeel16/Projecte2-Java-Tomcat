@@ -76,7 +76,11 @@
       <td>${artist.name}</td>
       <td>
         <button class="favorito">Añadir a Favoritos</button>
-        <button class="eliminar">Eliminar</button>
+        <form action="artist" method="post">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="artistId" value="${artist.artistId}">
+          <button class="eliminar" type="submit">Eliminar</button>
+        </form>
       </td>
     </tr>
   </c:forEach>

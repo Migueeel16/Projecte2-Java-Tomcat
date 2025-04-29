@@ -30,4 +30,16 @@ public class AlbumRepository {
         return albums;
     }
 
+    public void deleteAlbum(int id) {
+        String queryDeleteAlbum = "DELETE FROM Album WHERE AlbumId = ?";
+        try {
+            Connection con = Conexio.getConexio();
+            PreparedStatement statement = con.prepareStatement(queryDeleteAlbum);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

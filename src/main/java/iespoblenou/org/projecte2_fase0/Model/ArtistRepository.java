@@ -27,4 +27,16 @@ public class ArtistRepository {
         }
         return artists;
     }
+
+    public void delete(int artistId) {
+        String queryDeleteArtist = "DELETE FROM Artist WHERE ArtistId = ?";
+        try {
+            Connection con = Conexio.getConexio();
+            PreparedStatement statement = con.prepareStatement(queryDeleteArtist);
+            statement.setInt(1, artistId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

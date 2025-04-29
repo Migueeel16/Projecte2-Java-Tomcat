@@ -2,6 +2,7 @@ package iespoblenou.org.projecte2_fase0.Controller;
 
 import iespoblenou.org.projecte2_fase0.Model.Album;
 import iespoblenou.org.projecte2_fase0.Model.AlbumRepository;
+import iespoblenou.org.projecte2_fase0.Model.ArtistRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,6 +35,17 @@ public class AlbumServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        String action = req.getParameter("action");
+
+        if ("delete".equals(action)) {
+            int albumId = Integer.parseInt(req.getParameter("albumId"));
+
+            AlbumRepository albumRepository = new AlbumRepository();
+            albumRepository.deleteAlbum(albumId);
+
+            resp.sendRedirect("album");
+        } else {
+            doGet(req, resp);
+        }
     }
 }

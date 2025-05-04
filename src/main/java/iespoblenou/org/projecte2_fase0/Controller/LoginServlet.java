@@ -1,14 +1,13 @@
 package iespoblenou.org.projecte2_fase0.Controller;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import iespoblenou.org.projecte2_fase0.Model.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 import jakarta.servlet.RequestDispatcher;
 
 @WebServlet("/login")
@@ -19,18 +18,39 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        Cookie cookie = new Cookie("username", username);
+        HttpSession session = request.getSession();
+        cookie.setMaxAge(60 * 60 * 24);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        String lang = request.getParameter("lang");
+        if (lang == null || lang.isEmpty()) {
+            lang = (String) session.getAttribute("lang");
+            if (lang == null || lang.isEmpty()) {
+                lang = "es";
+            }
+        } else {
+            session.setAttribute("lang", lang);
+        }
+        Locale locale = new Locale(lang);
+        ResourceBundle labels = ResourceBundle.getBundle("i18n.messages", locale);
+        request.setAttribute("labels", labels);
 
         if (UserRepository.validateUser(username, password)) {
-            HttpSession session = request.getSession();
+
             session.setAttribute("user", username);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/home");
-            dispatcher.forward(request, response);
+            response.sendRedirect("home");
+
         } else {
             request.setAttribute("errorMessage", "Usuari o contrasenya incorrectes!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ErrorServlet");
-            dispatcher.forward(request, response);
+            response.sendRedirect("ErrorServlet");
         }
+        System.out.println("Usuario: " + username);
+        System.out.println("Contraseña: " + password);
+        System.out.println("Usuario válido: " + UserRepository.validateUser(username, password));
     }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -20,6 +22,19 @@ public class HomeServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         String user = (session != null) ? (String) session.getAttribute("user") : null;
+
+        String lang = request.getParameter("lang");
+        if (lang == null || lang.isEmpty()) {
+            lang = (String) session.getAttribute("lang");
+            if (lang == null || lang.isEmpty()) {
+                lang = "es";
+            }
+        } else {
+            session.setAttribute("lang", lang);
+        }
+        Locale locale = new Locale(lang);
+        ResourceBundle labels = ResourceBundle.getBundle("i18n.messages", locale);
+        request.setAttribute("labels", labels);
 
         if (user != null) {
             request.getRequestDispatcher("jsp/home.jsp").forward(request, response);

@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/album")
 public class AlbumServlet extends HttpServlet {
@@ -23,7 +25,18 @@ public class AlbumServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
+        String lang = request.getParameter("lang");
+        if (lang == null || lang.isEmpty()) {
+            lang = (String) session.getAttribute("lang");
+            if (lang == null || lang.isEmpty()) {
+                lang = "es";
+            }
+        } else {
+            session.setAttribute("lang", lang);
+        }
+        Locale locale = new Locale(lang);
+        ResourceBundle labels = ResourceBundle.getBundle("i18n.messages", locale);
+        request.setAttribute("labels", labels);
         if(session == null || session.getAttribute("user") == null) {
             response.sendRedirect("login");
         } else {
